@@ -1,0 +1,40 @@
+classDiagram
+    %% PawPal+ — pet care planning assistant
+    %% Four core classes: Owner, Pet, CareTask, Scheduler
+
+    class Owner {
+        +str name
+        +int minutes_available
+        +list~str~ preferences
+        +add_pet(pet: Pet) void
+        +add_task(task: CareTask) void
+    }
+
+    class Pet {
+        +str name
+        +str species
+        +str breed
+        +int age
+        +list~CareTask~ tasks
+        +add_task(task: CareTask) void
+    }
+
+    class CareTask {
+        +str title
+        +int duration_minutes
+        +str priority
+        +bool recurring
+        +int priority_weight() int
+    }
+
+    class Scheduler {
+        +Owner owner
+        +list~CareTask~ tasks
+        +build_plan() list~CareTask~
+        +explain() str
+    }
+
+    Owner "1" --> "many" Pet : owns
+    Pet "1" --> "many" CareTask : needs
+    Scheduler --> Owner : plans for
+    Scheduler --> CareTask : orders
