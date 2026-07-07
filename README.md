@@ -54,34 +54,50 @@ Today's plan (45 minutes available):
   - Feed breakfast (10 min, priority: medium)
 Total time used: 35 minutes.
 ```
-
 ## 🧪 Testing PawPal+
 
-```bash
-# Run the full test suite:
-pytest
+### Run the test suite
 
-# Run with coverage:
+```bash
+# Run the full test suite
+python3 -m pytest
+
+# (Optional) Run with coverage
 pytest --cov
 ```
 
-Sample test output:
+### What the tests cover
 
-```
+- Task completion updates the task status.
+- Adding a task increases a pet's task count.
+- Tasks are sorted in chronological order.
+- Daily recurring tasks automatically create the next occurrence.
+- Conflict detection identifies tasks scheduled at the same time.
+- Scheduler filtering works correctly.
+- Core scheduling behaviors function as expected.
 
+### Sample test output
+
+```text
 =============================== test session starts ===============================
 platform darwin -- Python 3.9.6, pytest-8.4.2, pluggy-1.6.0
 rootdir: /Users/gina-mar/Desktop/Work/codepath/Paypal/ai110-module2show-pawpal-starter
-collected 2 items
+collected 11 items
 
-tests/test_pawpal.py ..                                                     [100%]
+tests/test_pawpal.py ...........                                            [100%]
 
-================================ 2 passed in 0.01s ================================
+=============================== 11 passed in 0.01s ================================
 ```
+
+### Confidence Level
+
+The automated test suite verifies the core functionality of the PawPal+ system, including task management, scheduling, sorting, filtering, recurring tasks, and conflict detection. Based on the passing test results, I am confident that the application's primary features work as intended.
 
 ## 📐 Smarter Scheduling
 
 > Fill in once you've implemented scheduling logic.## 📐 Smarter Scheduling
+
+## 📐 Smarter Scheduling
 
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
