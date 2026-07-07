@@ -1,0 +1,51 @@
+classDiagram
+    %% PawPal+ — final architecture after Phases 2-5
+    %% Reflects sorting, filtering, recurrence, and conflict detection
+
+    class CareTask {
+        +str title
+        +int duration_minutes
+        +str priority
+        +str time
+        +date due_date
+        +str frequency
+        +bool is_complete
+        +str pet_name
+        +priority_weight() int
+        +mark_complete() void
+        +generate_next_occurrence() CareTask
+    }
+
+    class Pet {
+        +str name
+        +str species
+        +str breed
+        +int age
+        +list~CareTask~ tasks
+        +add_task(task: CareTask) void
+        +complete_task(task: CareTask) void
+    }
+
+    class Owner {
+        +str name
+        +int minutes_available
+        +list~str~ preferences
+        +list~Pet~ pets
+        +add_pet(pet: Pet) void
+        +get_all_tasks() list~CareTask~
+    }
+
+    class Scheduler {
+        +Owner owner
+        +build_plan() list~CareTask~
+        +sort_by_time(tasks) list~CareTask~
+        +filter_tasks(pet_name, completed) list~CareTask~
+        +detect_conflicts() list~str~
+        +explain() str
+    }
+
+    Owner "1" --> "many" Pet : owns
+    Pet "1" --> "many" CareTask : needs
+    Scheduler --> Owner : reads tasks via get_all_tasks()
+    Scheduler --> CareTask : sorts, filters, orders
+    CareTask --> CareTask : generates next occurrence

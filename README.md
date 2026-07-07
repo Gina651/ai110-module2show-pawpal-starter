@@ -16,11 +16,15 @@ Your job is to design the system first (UML), then implement the logic in Python
 
 Your final app should:
 
-- Let a user enter basic owner + pet info
-- Let a user add/edit tasks (duration + priority at minimum)
-- Generate a daily schedule/plan based on constraints and priorities
-- Display the plan clearly (and ideally explain the reasoning)
-- Include tests for the most important scheduling behaviors
+- Add owner and pet information through the Streamlit UI.
+- Add care tasks with title, duration, priority, time, and recurrence.
+- Generate a time-constrained daily care plan.
+- Sort tasks chronologically by scheduled time.
+- Filter tasks by pet name and completion status.
+- Detect scheduling conflicts when tasks share the same time.
+- Automatically create the next occurrence for daily or weekly recurring tasks.
+- Verify core behavior with an automated pytest suite.
+
 
 ## Getting started
 
@@ -105,12 +109,61 @@ The automated test suite verifies the core functionality of the PawPal+ system, 
 
 ## 📸 Demo Walkthrough
 
-Describe your app in numbered steps so a reader can follow along without watching a video:
+**Main UI features:** add an owner and pet, add care tasks with a title,
+duration, priority, time, and optional recurrence, view all tasks sorted
+chronologically, filter by completion status, see conflict warnings, and
+generate a time-constrained daily plan.
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+**Example workflow:**
+1. Enter an owner name and how many minutes are available today.
+2. Add a pet (name, species).
+3. Add several tasks with different times and priorities — including two
+   at the same time, to see conflict detection in action.
+4. Review the sorted task table and any conflict warnings.
+5. Click "Generate schedule" to see the final prioritized plan.
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
+**Key Scheduler behaviors shown:** chronological sorting, status
+filtering, conflict warnings for double-booked times, and a
+priority-first, time-budget-constrained plan.
+
+**Sample CLI output** (from `python main.py`):
+
+```
+=== All tasks sorted by time ===
+  08:00 - Bella: Morning walk
+  08:00 - Whiskers: Feed breakfast
+  12:00 - Whiskers: Clean litter box
+  18:00 - Bella: Give medication
+
+=== Filter: Bella's tasks only ===
+  Give medication
+  Morning walk
+
+=== Filter: incomplete tasks only ===
+  Bella: Give medication
+  Bella: Morning walk
+  Whiskers: Feed breakfast
+  Whiskers: Clean litter box
+
+=== Conflict detection (before completing anything) ===
+  ! Conflict at 08:00 — Bella: Morning walk, Whiskers: Feed breakfast
+
+=== Completing Bella's daily walk (recurring) ===
+  Original task complete: True
+  New occurrence auto-created for: 2026-07-08
+
+=== Today's Plan (with warnings) ===
+Today's plan (60 minutes available):
+  - Give medication (5 min, priority: high)
+  - Morning walk (20 min, priority: high)
+  - Feed breakfast (10 min, priority: medium)
+  - Clean litter box (15 min, priority: low)
+Total time used: 50 minutes.
+
+Warnings:
+  ! Conflict at 08:00 — Bella: Morning walk, Whiskers: Feed breakfast
+```
+
+*(Note: the recurring task's new date will match tomorrow relative to
+whenever you actually run it — the date above reflects the day this demo
+was run.)*
