@@ -42,6 +42,10 @@ The original Scheduler.tasks list duplicated information that was already stored
 - Describe one tradeoff your scheduler makes.
 - Why is that tradeoff reasonable for this scenario?
 
+One tradeoff my scheduler makes is that it only detects conflicts when two tasks are scheduled at the exact same time. It does not check whether task durations overlap. For example, a 20-minute walk starting at 8:00 and a 15-minute task starting at 8:10 would overlap in real life, but my scheduler would not identify them as a conflict because their start times are different.
+
+This tradeoff is reasonable for this project because checking for exact time matches is simple, efficient, and easy to understand. Implementing full overlap detection would require calculating start and end times for every task and comparing time intervals, which would make the algorithm more complex. Since the goal of this version is to catch the most common scheduling mistakes, detecting exact-time conflicts provides a practical and beginner-friendly solution.
+
 ---
 
 ## 3. AI Collaboration
